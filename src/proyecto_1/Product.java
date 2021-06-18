@@ -1,5 +1,7 @@
 package proyecto_1;
 
+import java.util.ArrayList;
+
 public class Product {
 
     private int id;
@@ -7,19 +9,12 @@ public class Product {
     private String description;
     private int cost;
     private int price;
-    private Ingredient[] ingredients;
+    //private Ingredient[] ingredients;
+    private ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
 
     public Product() {
     }
 
-    public Product(int id, String name, String description, int cost, int price, Ingredient[] ingredients) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.cost = cost;
-        this.price = price;
-        this.ingredients = ingredients;
-    }
 
     public int getId() {
         return id;
@@ -41,9 +36,10 @@ public class Product {
         return price;
     }
 
-    public Ingredient[] getIngredients() {
+    public ArrayList<Ingredient> getIngredients() {
         return ingredients;
     }
+
 
     public void setId(int id) {
         this.id = id;
@@ -65,9 +61,6 @@ public class Product {
         this.price = price;
     }
 
-    public void setIngredients(Ingredient[] ingredients) {
-        this.ingredients = ingredients;
-    }
 
 
 

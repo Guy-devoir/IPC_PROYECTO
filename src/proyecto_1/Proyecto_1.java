@@ -19,6 +19,8 @@ import java.util.Scanner;
 public class Proyecto_1 {
     static ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
     static ArrayList<Product> productos = new ArrayList<Product>();
+    static ArrayList<Client> clientes = new ArrayList<Client>();
+    static ArrayList<Factura> facturas = new ArrayList<Factura>();
     static Config config = new Config();
 
     public static void main(String[] args) throws IOException {
@@ -43,14 +45,16 @@ public class Proyecto_1 {
         } catch (FileNotFoundException e) {
 
         }
-        System.out.println(json);
+        //System.out.println(json);
         config = gson.fromJson(json, Config.class);
         leer_usuarios();
-        System.out.println(config.getLoad());
+        System.out.println("Cargando archivos: " + config.getLoad());
         
         if(config.getLoad().equals("json")){
         leer_usuarios();
         leer_productos();
+        leer_clientes();
+        leer_facturas();
         }
         if(config.getLoad().equals("bin")){
         
@@ -78,11 +82,71 @@ public class Proyecto_1 {
 
         //System.out.println(aux[0].getUsername()+aux[0].getPassword());
         usuarios.addAll(Arrays.asList(aux));
+        /* System.out.println(usuarios.get(0).getUsername());
+        System.out.println(usuarios.get(1).getUsername());
+        System.out.println(usuarios.get(2).getUsername());
+         */
+    }
+
+    private static void leer_productos() throws IOException {
+        Product[] aux;
+        Gson gson = new Gson();
+        String json = "";
+        try {
+            BufferedReader buffer = new BufferedReader(new FileReader("C:\\Users\\Dell\\Documents\\NetBeansProjects\\Proyecto_1\\products.json"));
+            String linea;
+            while ((linea = buffer.readLine()) != null) {
+                json += linea;
+            }
+            buffer.close();
+        } catch (FileNotFoundException e) {
+
+        }
+        //System.out.println(json);
+
+        aux = gson.fromJson(json, Product[].class);
+
+        //System.out.println(aux[0].getUsername()+aux[0].getPassword());
+        productos.addAll(Arrays.asList(aux));
         //System.out.println(usuarios.get(0));
     }
-    
-    private static void leer_productos() {
+     
+    private static void leer_clientes() throws IOException {
+        Client[] aux;
+        Gson gson = new Gson();
+        String json = "";
+        try {
+            BufferedReader buffer = new BufferedReader(new FileReader("C:\\Users\\Dell\\Documents\\NetBeansProjects\\Proyecto_1\\clients.json"));
+            String linea;
+            while ((linea = buffer.readLine()) != null) {
+                json += linea;
+            }
+        } catch (FileNotFoundException e) {
+            
+        }
         
+        aux = gson.fromJson(json, Client[].class);
+        
+        clientes.addAll(Arrays.asList(aux));
+    }
+
+    private static void leer_facturas() throws IOException {
+            Factura[] aux;
+        Gson gson = new Gson();
+        String json = "";
+        try {
+            BufferedReader buffer = new BufferedReader(new FileReader("C:\\Users\\Dell\\Documents\\NetBeansProjects\\Proyecto_1\\invoices.json"));
+            String linea;
+            while ((linea = buffer.readLine()) != null) {
+                json += linea;
+            }
+        } catch (FileNotFoundException e) {
+            
+        }
+        
+        aux = gson.fromJson(json, Factura[].class);
+        
+        facturas.addAll(Arrays.asList(aux));
     }
 
     private static void password() {
@@ -97,15 +161,16 @@ public class Proyecto_1 {
         for (int a = 0; a < password.length; a++) {
             pass += String.valueOf(password[a]);;
         }
-        for (int i = 0; i < usuarios.size(); i++) {
-            if(user.equals(usuarios.get(i).getUsername())&& pass.equals(usuarios.get(i).getPassword())){
+        boolean aux = validation(user, pass);
+        
+            if(aux == true){
             Menu();
             }else{
             System.out.println("El usuario o la contraseña estan mal escritos");
             System.out.println("Porfavor vulve a ingresarlos \n");
             password();
         }
-        }
+        
     }
 
     private static void Menu() {
@@ -151,10 +216,10 @@ public class Proyecto_1 {
                 System.out.println("Menu de " + kind);
                 switch (opc = sc.nextByte()) {
                     case 1:
-                        System.out.println("Introduzca el id");
+                        
                         try{
                         if(kind.equals("Usuarios")){
-                        
+                        System.out.println("Introduzca el usuario a eliminar");
                         }
                         }catch(Exception e){
                         
@@ -165,6 +230,7 @@ public class Proyecto_1 {
                     case 3:
                         break;
                     case 4:
+                        menu = false;
                         break;
                     default:
                         System.out.println("Entreda no valida");
@@ -175,5 +241,18 @@ public class Proyecto_1 {
             }
         }
     }
+
+    private static boolean validation(String user, String pass) {
+        for (int i = 0; i < usuarios.size(); i++) {
+            //System.out.println(usuarios.get(i));
+            if ((user.equals(usuarios.get(i).getUsername())) && (pass.equals(usuarios.get(i).getPassword()))) {
+                //System.out.println("Ok");
+                return true;
+            }
+        }
+        return false;
+    }
+
+   
 
 }
