@@ -20,9 +20,11 @@ public class Proyecto_1 {
     static ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
     static ArrayList<Product> productos = new ArrayList<Product>();
     static Config config = new Config();
-
+    public static int contador=0;
+    
     public static void main(String[] args) throws IOException {
         set_config();
+        System.out.println("hola ya pasaste");
         try {
             password();
         } catch (Exception e) {
@@ -34,7 +36,10 @@ public class Proyecto_1 {
         Gson gson = new Gson();
         String json = "";
         try {
-            BufferedReader buffer = new BufferedReader(new FileReader("C:\\Users\\Dell\\Documents\\NetBeansProjects\\Proyecto_1\\json_files\\config.json"));
+            //Ruta de acceso de archivo config para luciano comentar la de abjo para poder usar
+            //BufferedReader buffer = new BufferedReader(new FileReader("C:\\Users\\Dell\\Documents\\NetBeansProjects\\Proyecto_1\\json_files\\config.json"));
+            //Ruta de acceso de archivo connfig para brayan
+            BufferedReader buffer = new BufferedReader(new FileReader("C:\\Users\\Messi\\Desktop\\yo\\Proyecto ipc\\Fase 1\\IPC_PROYECTO\\json_files\\config.json"));
             String linea;
             while ((linea = buffer.readLine()) != null) {
                 json += linea;
@@ -63,7 +68,10 @@ public class Proyecto_1 {
         Gson gson = new Gson();
         String json = "";
         try {
-            BufferedReader buffer = new BufferedReader(new FileReader("C:\\Users\\Dell\\Documents\\NetBeansProjects\\Proyecto_1\\users.json"));
+            //Ruta de acceso de archivo user.json para luciano comentar la de abjo para poder usar
+            //BufferedReader buffer = new BufferedReader(new FileReader("C:\\Users\\Dell\\Documents\\NetBeansProjects\\Proyecto_1\\users.json"));
+            //Ruta de acceso de archivo user.json para brayan
+            BufferedReader buffer = new BufferedReader(new FileReader("C:\\Users\\Messi\\Desktop\\yo\\Proyecto ipc\\Fase 1\\IPC_PROYECTO\\json_files\\users.json"));
             String linea;
             while ((linea = buffer.readLine()) != null) {
                 json += linea;
@@ -91,21 +99,27 @@ public class Proyecto_1 {
         System.out.println("Usuario:");
         user = sc1.nextLine();
         System.out.println("Contraseña:");
+        
         Console console = System.console();
         char[] password = console.readPassword();
         String pass = "";
         for (int a = 0; a < password.length; a++) {
             pass += String.valueOf(password[a]);;
         }
+        
+        //Procedimiento para verificar que la contraseña si la contraseña es la misma probarlo en consola
+        //Se utilizo procedimiento de recursividad para cada vuleta hasta ser la correcta
         for (int i = 0; i < usuarios.size(); i++) {
             if(user.equals(usuarios.get(i).getUsername())&& pass.equals(usuarios.get(i).getPassword())){
             Menu();
-            }else{
+            break;
+            }
+       
+        }
             System.out.println("El usuario o la contraseña estan mal escritos");
             System.out.println("Porfavor vulve a ingresarlos \n");
             password();
-        }
-        }
+     
     }
 
     private static void Menu() {
