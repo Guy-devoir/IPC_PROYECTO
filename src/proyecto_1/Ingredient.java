@@ -1,15 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package proyecto_1;
+
+import java.io.Serializable;
 
 /**
  *
  * @author Dell
  */
-public class Ingredient {
+public class Ingredient implements Serializable {
     private String name;
     private int quantity;
     private String units;
@@ -21,6 +19,11 @@ public class Ingredient {
         this.name = name;
         this.quantity = quantity;
         this.units = units;
+    }
+
+    @Override
+    public String toString() {
+        return "Ingredient{" + "name=" + name + ", quantity=" + quantity + ", units=" + units + '}';
     }
     
     

@@ -1,6 +1,7 @@
 package proyecto_1;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Product implements Serializable {
 
@@ -9,18 +10,18 @@ public class Product implements Serializable {
     private String description;
     private int cost;
     private int price;
-    private Ingredient[] ingredients;
+    private ArrayList<Ingredient> ingredientes = new ArrayList<Ingredient>();
 
     public Product() {
     }
 
-    public Product(int id, String name, String description, int cost, int price, Ingredient[] ingredients) {
+    public Product(int id, String name, String description, int cost, int price) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.cost = cost;
         this.price = price;
-        this.ingredients = ingredients;
+
     }
 
     public int getId() {
@@ -43,9 +44,6 @@ public class Product implements Serializable {
         return price;
     }
 
-    public Ingredient[] getIngredients() {
-        return ingredients;
-    }
 
     public void setId(int id) {
         this.id = id;
@@ -67,9 +65,15 @@ public class Product implements Serializable {
         this.price = price;
     }
 
-    public void setIngredients(Ingredient[] ingredients) {
-        this.ingredients = ingredients;
+    public ArrayList<Ingredient> getIngredientes() {
+        return ingredientes;
     }
+
+    @Override
+    public String toString() {
+        return "Product{" + "id=" + id + ", name=" + name + ", description=" + description + ", cost=" + cost + ", price=" + price + ", " + ingredientes.toString() + '}';
+    }
+
 
 
 

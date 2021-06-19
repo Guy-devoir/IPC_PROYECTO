@@ -1,6 +1,8 @@
 package proyecto_1;
 
-public class Config {
+import java.io.Serializable;
+
+public class Config implements Serializable {
 
     private String name;
     private String address;
