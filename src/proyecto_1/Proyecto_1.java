@@ -2,11 +2,14 @@ package proyecto_1;
 
 import com.google.gson.Gson;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.Console;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -18,7 +21,6 @@ import java.util.Scanner;
  * @author Luciano Xiquín
  * @author Oscar Hernández
  * @author Oscar Hernández
- * @author Fernando Mendoza
  **/
 public class Proyecto_1 {
     static ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
@@ -27,7 +29,7 @@ public class Proyecto_1 {
     static ArrayList<Factura> facturas = new ArrayList<Factura>();
     static Config config = new Config();
     public static int contador = 0;
-    
+
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         set_config();
         System.out.println("============================");
@@ -56,20 +58,19 @@ public class Proyecto_1 {
         }
         //System.out.println(json);
         config = gson.fromJson(json, Config.class);
-        leer_usuarios();
         System.out.println("Archivos a leer: " + config.getLoad());
-        
-        if(config.getLoad().equals("json")){
-        leer_usuarios();
-        leer_productos();
-        leer_clientes();
-        leer_facturas();
+
+        if (config.getLoad().equals("json")) {
+            leer_usuarios();
+            leer_productos();
+            leer_clientes();
+            leer_facturas();
         }
-        if(config.getLoad().equals("bin")){
-        usuarios = (ArrayList<Usuario>) deserialize("users.ipcrm");
-        productos = (ArrayList<Product>) deserialize("products.ipcrm");
-        clientes = (ArrayList<Client>) deserialize("clients.ipcrm");
-        facturas = (ArrayList<Factura>) deserialize("invoices.ipcrm");
+        if (config.getLoad().equals("bin")) {
+            usuarios = (ArrayList<Usuario>) deserialize("users.ipcrm");
+            productos = (ArrayList<Product>) deserialize("products.ipcrm");
+            clientes = (ArrayList<Client>) deserialize("clients.ipcrm");
+            facturas = (ArrayList<Factura>) deserialize("invoices.ipcrm");
         }
 
     }
@@ -97,7 +98,7 @@ public class Proyecto_1 {
         usuarios.addAll(Arrays.asList(aux));
         //System.out.println(usuarios.get(0));
     }
-  
+
     private static void leer_productos() throws IOException {
         Product[] aux;
         Gson gson = new Gson();
@@ -172,32 +173,38 @@ public class Proyecto_1 {
         for (int a = 0; a < password.length; a++) {
             pass += String.valueOf(password[a]);;
         }
-        
+
         //Procedimiento para verificar que la contraseña si la contraseña es la misma probarlo en consola
         //Se utilizo procedimiento de recursividad para cada vuleta hasta ser la correcta
         for (int i = 0; i < usuarios.size(); i++) {
-            if(user.equals(usuarios.get(i).getUsername())&& pass.equals(usuarios.get(i).getPassword())){
-            Menu();
-            break;
+            if (user.equals(usuarios.get(i).getUsername()) && pass.equals(usuarios.get(i).getPassword())) {
+                Menu();
+                break;
             }
-       
+
         }
-            System.out.println("El usuario o la contraseña estan mal escritos");
-            System.out.println("Porfavor vulve a ingresarlos \n");
-            password();
-     
+        System.out.println("El usuario o la contraseña estan mal escritos");
+        System.out.println("Porfavor vulve a ingresarlos \n");
+        password();
+
     }
 
     private static void Menu() {
         Scanner sc = new Scanner(System.in);
         int opt;
-        String aux = ""; 
+        String aux = "";
         boolean menu = true;
         boolean submenu = true;
         while (menu == true) {
             try {
                 int cutre;
-                System.out.println("Menu Principal" + "\n1)Informaci+on del restaurante" + "\n2)Usuarios" + "\n3)Productos" + "\n4)Clientes" + "\n5)Facturas" + "\n6)Salir y guardar");
+                System.out.println("Menu Principal" 
+                        + "\n1)Informaci+on del restaurante" 
+                        + "\n2)Usuarios" 
+                        + "\n3)Productos" 
+                        + "\n4)Clientes" 
+                        + "\n5)Facturas" 
+                        + "\n6)Salir y guardar");
                 switch (opt = sc.nextByte()) {
                     case 1:
                         System.out.println("Nombre del local: " + config.getName() + "\nDirección: " + config.getAddress() + "\nTelefono: " + config.getPhone());
@@ -205,6 +212,10 @@ public class Proyecto_1 {
                     case 2:
                         submenu = true;
                         while (submenu != false) {
+                            System.out.println( "Menu Usuario"
+                                    + "\n1)Listar todos los usuarios"
+                                    + "\n2)Eliminar Usuario"
+                                    + "\n3)Mostrar usuario <dar id>");
                             switch (opt = sc.nextByte()) {
                                 case 1:
                                     cutre = 1;
@@ -212,12 +223,25 @@ public class Proyecto_1 {
                                     submenu = false;
                                     break;
                                 case 2:
+                                    System.out.println("Usuario a eliminar: ");
+                                    Scanner sc1_1 = new Scanner(System.in);
+                                    String UserDel = sc1_1.nextLine();
+                                    for (int i = 0; i < usuarios.size(); i++) {
+                                        if (UserDel.equals(usuarios.get(i).getUsername())) {
+                                            usuarios.remove(i);
+                                        }
+                                    }
                                     submenu = false;
                                     break;
                                 case 3:
-                                    submenu = false;
-                                    break;
-                                case 4:
+                                    System.out.print("Mostrar contraseña del usuario: ");
+                                    Scanner sc1_2 = new Scanner(System.in);
+                                    String get_aux = sc1_2.nextLine();
+                                    for (int i = 0; i < usuarios.size(); i++) {
+                                        if (get_aux.equals(usuarios.get(i).getUsername())) {
+                                            System.out.println("Contraseña: " + usuarios.get(i).getPassword());
+                                        }
+                                    }
                                     submenu = false;
                                     break;
                             }
@@ -234,11 +258,24 @@ public class Proyecto_1 {
                                     print_object(cutre);
                                     break;
                                 case 2:
+                                    System.out.println("id del Producto: ");
+                                    Scanner sc1_1 = new Scanner(System.in);
+                                    int aux1 = sc1_1.nextByte();
+                                    for (int i = 0; i < productos.size(); i++) {
+                                        if (aux1 == productos.get(i).getId()) {
+                                            productos.remove(i);
+                                        }
+                                    }
                                     break;
                                 case 3:
-                                    break;
-                                case 4:
-                                    submenu = false;
+                                    System.out.println("Id del producto:");
+                                    Scanner sc1_2 = new Scanner(System.in);
+                                    int aux2 = sc1_2.nextByte();
+                                    for (int i = 0; i < productos.size(); i++) {
+                                        if (aux2 == productos.get(i).getId()) {
+                                            System.out.println(productos.get(i).toString());
+                                        }
+                                    }
                                     break;
                             }
                         }
@@ -253,13 +290,25 @@ public class Proyecto_1 {
                                     print_object(cutre);
                                     break;
                                 case 2:
+                                    System.out.println("id del Cliente: ");
+                                    Scanner sc1_1 = new Scanner(System.in);
+                                    int aux1 = sc1_1.nextByte();
+                                    for (int i = 0; i < clientes.size(); i++) {
+                                        if (aux1 == clientes.get(i).getId()) {
+                                            clientes.remove(i);
+                                        }
+                                    }
                                     break;
                                 case 3:
+                                    System.out.println("Id de cliente:");
+                                    Scanner sc1_2 = new Scanner(System.in);
+                                    int aux2 = sc1_2.nextByte();
+                                    for (int i = 0; i < clientes.size(); i++) {
+                                        if (aux2 == clientes.get(i).getId()) {
+                                            System.out.println(clientes.get(i).toString());
+                                        }
+                                    }
                                     break;
-                                case 4:
-                                    submenu = false;
-                                    break;
-
                             }
                         }
                         break;
@@ -272,27 +321,58 @@ public class Proyecto_1 {
                                     print_object(cutre);
                                     break;
                                 case 2:
+                                    System.out.println("id de la Factura: ");
+                                    Scanner sc1_1 = new Scanner(System.in);
+                                    int aux1 = sc1_1.nextByte();
+                                    for (int i = 0; i < facturas.size(); i++) {
+                                        if (aux1 == facturas.get(i).getId()) {
+                                            facturas.remove(i);
+                                        }
+                                    }
                                     break;
                                 case 3:
-                                    break;
-                                case 4:
-                                    submenu = false;
+                                    System.out.println("id de la Factura: ");
+                                    Scanner sc1_2 = new Scanner(System.in);
+                                    int aux2 = sc1_2.nextByte();
+                                    for (int i = 0; i < facturas.size(); i++) {
+                                        if (aux2 == facturas.get(i).getId()) {
+                                            System.out.println(facturas.get(i).toString());
+                                        }
+                                    }
                                     break;
                             }
                         }
                         break;
                     case 6:
-                        System.out.println("1)Guardar en Json" + "\n2)Guardar en binario" + "\n3)Salir sin guardar");
+                        Gson gson = new Gson();
+                        System.out.println("*****Serializar*****"
+                                + "\n1)Guardar en Json"
+                                + "\n2)Guardar en binario"
+                                + "\n3)Salir sin guardar");
                         submenu = true;
                         while (submenu != false) {
                             switch (opt = sc.nextByte()) {
                                 case 1:
+                                    //Serializar Usuarios
+                                    String jsonUsuarios = gson.toJson(usuarios);
+                                    writeOnFile("users.json", jsonUsuarios, false);
+                                    //Serializar Productos
+                                    String jsonProductos = gson.toJson(productos);
+                                    writeOnFile("products.json", jsonProductos, false);
+                                    //Serializar Clientes
+                                    String jsonClientes = gson.toJson(clientes);
+                                    writeOnFile("clients.json", jsonClientes, false);
+                                    //Serializar Facturas
+                                    String jsonFacturas = gson.toJson(facturas);
+                                    writeOnFile("invoices.json", jsonClientes, false);
+                                    System.exit(0);
                                     break;
                                 case 2:
                                     Serializable_binario("users.ipcrm", usuarios);
                                     Serializable_binario("products.ipcrm", productos);
                                     Serializable_binario("clients.ipcrm", clientes);
                                     Serializable_binario("invoices.ipcrm", facturas);
+                                    System.exit(0);
                                     break;
                                 case 3:
                                     System.exit(0);
@@ -308,9 +388,6 @@ public class Proyecto_1 {
                 System.out.println("Error, introduzca un número");
             }
         }
-    }
-
-    private static void serializable_json() throws IOException {
     }
 
     private static void Serializable_binario(String path, Object object) {
@@ -357,4 +434,29 @@ public class Proyecto_1 {
         }
         }
     }
+    
+    public static void writeOnFile(String pathname, String content, boolean append) {
+        File file;
+        FileWriter fw = null;
+        BufferedWriter bw = null;
+
+        try {
+            file = new File(pathname);
+            fw = new FileWriter(file, append);
+            bw = new BufferedWriter(fw);
+            bw.write(content);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (bw != null)
+                    bw.close();
+                if (fw != null)
+                    fw.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
 }
