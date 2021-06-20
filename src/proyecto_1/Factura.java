@@ -40,7 +40,7 @@ public class Factura implements Serializable {
     }
     
     public String toLongString() {
-        return "Factura{" + "id=" + id + ", client=" + client + ", date=" + date + ", " + products.toString() + '}';
+        return "Factura{" + "id=" + id + ", client=" + client + ", date=" + date + '}';
     }
     
 }

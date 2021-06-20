@@ -293,7 +293,7 @@ public class Proyecto_1 {
                                     int aux2 = sc1_2.nextByte();
                                     for (int i = 0; i < productos.size(); i++) {
                                         if (aux2 == productos.get(i).getId()) {
-                                            System.out.println(productos.get(i).toString());
+                                            System.out.println(productos.get(i).toString() + productos.get(i).getIngredientes().toString());
                                         }
                                     }
                                     submenu = false;
@@ -373,8 +373,8 @@ public class Proyecto_1 {
                                     int aux2 = sc1_2.nextByte();
                                     for (int i = 0; i < facturas.size(); i++) {
                                         if (aux2 == facturas.get(i).getId()) {
-                                            System.out.println(facturas.get(i).toString());
-                                        }
+                                            System.out.println(facturas.get(i).toString()+ facturas.get(i).getProducts().toString());
+                                         }
                                     }
                                     submenu = false;
                                     break;
@@ -473,7 +473,7 @@ public class Proyecto_1 {
             }
         }if(cutre == 2){
         for (int i = 0; i < productos.size(); i++) {
-            System.out.println(productos.get(i).toString());
+            System.out.println(productos.get(i).toString() + productos.get(i).getIngredientes().toString());
         }
         }if(cutre == 3){
         for (int i = 0; i < clientes.size(); i++) {
@@ -481,7 +481,7 @@ public class Proyecto_1 {
         }
         }if(cutre == 4){
         for (int i = 0; i < facturas.size(); i++) {
-            System.out.println(facturas.get(i).toString());
+            System.out.println(facturas.get(i).toString()+ facturas.get(i).getProducts().toString());
         }
         }
     }
