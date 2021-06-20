@@ -1,6 +1,8 @@
 package proyecto_1;
 
-public class Client {
+import java.io.Serializable;
+
+public class Client implements Serializable{
     private int id;
     private String name;
     private String address;
@@ -56,6 +58,11 @@ public class Client {
 
     public void setNit(String nit) {
         this.nit = nit;
+    }
+
+    @Override
+    public String toString() {
+        return "Client{" + "id=" + id + ", name=" + name + ", address=" + address + ", phone=" + phone + ", nit=" + nit + '}';
     }
 
 }

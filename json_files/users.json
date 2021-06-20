@@ -1,9 +1,5 @@
 [
     {
-        "username": "alexizzarevalo",
-        "password": "helloworld"
-    },
-    {
         "username": "luciano",
         "password": "caprimint"
     },
@@ -12,13 +8,8 @@
         "password": "nothello"
     },
     {
-        "username": "jose",
-        "password": "123"
-    },
-    {
-        "username": "dani",
-        "password": "321"
+        "username": "alexizzarevalo",
+        "password": "helloworld"
     }
-
 
 ]
