@@ -22,7 +22,7 @@ import java.util.Scanner;
 /**
  * @author Luciano Xiquín
  * @author Oscar Hernández
- * @author Oscar Hernández
+ * @author Brayan Mica
  **/
 public class Proyecto_1 {
     static ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
@@ -262,12 +262,17 @@ public class Proyecto_1 {
                     case 3:
                         submenu = true;
                         while (submenu != false) {
+                            System.out.println( "Menu Productos"
+                                    + "\n1)Listar todos los productos"
+                                    + "\n2)Eliminar producto"
+                                    + "\n3)Mostrar contraseña del producto <dar id>");
                             switch (opt = sc.nextByte()) {
                                 case 1:
                                     //Para un if interno que determina que operación realizar.
                                     //La razón por la que se llama cutre es por que es un truco poco elegante
                                     cutre = 2;
                                     print_object(cutre);
+                                    submenu = false;
                                     break;
                                 case 2:
                                     System.out.println("id del Producto: ");
@@ -280,6 +285,7 @@ public class Proyecto_1 {
                                             productos.remove(i);
                                         }
                                     }
+                                    submenu = false;
                                     break;
                                 case 3:
                                     System.out.println("Id del producto:");
@@ -290,6 +296,7 @@ public class Proyecto_1 {
                                             System.out.println(productos.get(i).toString());
                                         }
                                     }
+                                    submenu = false;
                                     break;
                             }
                         }
@@ -298,10 +305,15 @@ public class Proyecto_1 {
                         //Sub_menu
                         submenu = true;
                         while (submenu != false) {
+                            System.out.println( "Menu Clientes"
+                                    + "\n1)Listar todos los clientes"
+                                    + "\n2)Eliminar cliente"
+                                    + "\n3)Mostrar contraseña del cliente <dar id>");
                             switch (opt = sc.nextByte()) {
                                 case 1:
                                     cutre = 3;
                                     print_object(cutre);
+                                    submenu = false;
                                     break;
                                 case 2:
                                     System.out.println("id del Cliente: ");
@@ -314,6 +326,7 @@ public class Proyecto_1 {
                                             
                                         }
                                     }
+                                    submenu = false;
                                     break;
                                 case 3:
                                     System.out.println("Id de cliente:");
@@ -324,6 +337,7 @@ public class Proyecto_1 {
                                             System.out.println(clientes.get(i).toString());
                                         }
                                     }
+                                    submenu = false;
                                     break;
                             }
                         }
@@ -331,10 +345,15 @@ public class Proyecto_1 {
                     case 5:
                         submenu = true;
                         while (submenu != false) {
+                            System.out.println( "Menu Facturas"
+                                    + "\n1)Listar todas las facturas"
+                                    + "\n2)Eliminar factura"
+                                    + "\n3)Mostrar contraseña de la factura <dar id>");
                             switch (opt = sc.nextByte()) {
                                 case 1:
                                     cutre = 4;
                                     print_object(cutre);
+                                    submenu = false;
                                     break;
                                 case 2:
                                     System.out.println("id de la Factura: ");
@@ -346,6 +365,7 @@ public class Proyecto_1 {
                                             facturas.remove(i);
                                         }
                                     }
+                                    submenu = false;
                                     break;
                                 case 3:
                                     System.out.println("id de la Factura: ");
@@ -356,6 +376,7 @@ public class Proyecto_1 {
                                             System.out.println(facturas.get(i).toString());
                                         }
                                     }
+                                    submenu = false;
                                     break;
                             }
                         }
