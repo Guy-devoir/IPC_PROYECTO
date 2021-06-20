@@ -13,6 +13,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -28,6 +30,8 @@ public class Proyecto_1 {
     static ArrayList<Client> clientes = new ArrayList<Client>();
     static ArrayList<Factura> facturas = new ArrayList<Factura>();
     static Config config = new Config();
+    static ArrayList<String> Listaacciones = new ArrayList<String>();
+    static String usuarioactual;
     public static int contador = 0;
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
@@ -160,7 +164,8 @@ public class Proyecto_1 {
         facturas.addAll(Arrays.asList(aux));
     }
 
-    private static void password() {
+    private static void password() throws IOException {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         String user;
         Scanner sc1 = new Scanner(System.in);
         System.out.println("Usuario:");
@@ -178,6 +183,8 @@ public class Proyecto_1 {
         //Se utilizo procedimiento de recursividad para cada vuleta hasta ser la correcta
         for (int i = 0; i < usuarios.size(); i++) {
             if (user.equals(usuarios.get(i).getUsername()) && pass.equals(usuarios.get(i).getPassword())) {
+                usuarioactual = user;
+                Listaacciones.add( " "+dtf.format(LocalDateTime.now())+"  "+usuarioactual+": Inicio de sesión exitoso");
                 Menu();
                 break;
             }
@@ -185,11 +192,14 @@ public class Proyecto_1 {
         }
         System.out.println("El usuario o la contraseña estan mal escritos");
         System.out.println("Porfavor vulve a ingresarlos \n");
+        //Agregando usuarios fallidos al logacciones
+        Listaacciones.add( " "+dtf.format(LocalDateTime.now())+"  "+user+": Inicio de sesión fallido");
         password();
 
     }
 
-    private static void Menu() {
+    private static void Menu() throws IOException {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         Scanner sc = new Scanner(System.in);
         int opt;
         String aux = "";
@@ -228,7 +238,9 @@ public class Proyecto_1 {
                                     String UserDel = sc1_1.nextLine();
                                     for (int i = 0; i < usuarios.size(); i++) {
                                         if (UserDel.equals(usuarios.get(i).getUsername())) {
-                                            usuarios.remove(i);
+                                            System.out.println("Se ha eliminado al usuario"+usuarios.get(i));
+                                            Listaacciones.add( " "+dtf.format(LocalDateTime.now())+"  "+usuarioactual+": Elimno al usuario "+usuarios.get(i));
+                                            usuarios.remove(i);      
                                         }
                                     }
                                     submenu = false;
@@ -263,6 +275,8 @@ public class Proyecto_1 {
                                     int aux1 = sc1_1.nextByte();
                                     for (int i = 0; i < productos.size(); i++) {
                                         if (aux1 == productos.get(i).getId()) {
+                                            System.out.println("Se ha eliminado al producto "+usuarios.get(i)+" con el id "+aux1);
+                                            Listaacciones.add( " "+dtf.format(LocalDateTime.now())+"  "+usuarioactual+": Elimno al producto "+productos.get(i)+ " con id "+ aux1);
                                             productos.remove(i);
                                         }
                                     }
@@ -295,7 +309,9 @@ public class Proyecto_1 {
                                     int aux1 = sc1_1.nextByte();
                                     for (int i = 0; i < clientes.size(); i++) {
                                         if (aux1 == clientes.get(i).getId()) {
+                                            Listaacciones.add( " "+dtf.format(LocalDateTime.now())+"  "+usuarioactual+": Elimno al cliente "+ clientes.get(i)+ " con el id "+ aux1);
                                             clientes.remove(i);
+                                            
                                         }
                                     }
                                     break;
@@ -326,6 +342,7 @@ public class Proyecto_1 {
                                     int aux1 = sc1_1.nextByte();
                                     for (int i = 0; i < facturas.size(); i++) {
                                         if (aux1 == facturas.get(i).getId()) {
+                                            Listaacciones.add( " "+dtf.format(LocalDateTime.now())+"  "+usuarioactual+": Elimno la factura "+ facturas.get(i)+ " con el id "+ aux1);
                                             facturas.remove(i);
                                         }
                                     }
@@ -344,6 +361,9 @@ public class Proyecto_1 {
                         }
                         break;
                     case 6:
+                        //log de acciones
+                        logacciones();
+                        //Seleccion de serealizacion
                         Gson gson = new Gson();
                         System.out.println("*****Serializar*****"
                                 + "\n1)Guardar en Json"
@@ -388,6 +408,16 @@ public class Proyecto_1 {
                 System.out.println("Error, introduzca un número");
             }
         }
+        
+     
+    }
+    
+    private static void logacciones() throws IOException{
+                FileWriter file = new FileWriter("log.log");
+                for (int a=0; a < Listaacciones.size();a++){
+                    file.write(""+ Listaacciones.get(a) +"\n");
+                }
+                file.close();
     }
 
     private static void Serializable_binario(String path, Object object) {
