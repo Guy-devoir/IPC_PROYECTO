@@ -1,0 +1,31 @@
+[
+    {
+        "id": 1,
+        "name": "Darwin Arevalo",
+        "address": "Ciudad de Guatemala",
+        "phone": 42562365,
+        "nit": "5283282-3"
+    },
+    {
+        "id": 2,
+        "name": "Fernando Arevalo",
+        "address": "Ciudad de Guatemala",
+        "phone": 42562365,
+        "nit": "5283282-3"
+    },
+    {
+        "id": 3,
+        "name": "Gerson Arevalo",
+        "address": "Ciudad de Guatemala",
+        "phone": 42562365,
+        "nit": "5283282-3"
+    },
+    {
+        "id": 4,
+        "name": "Alex Arevalo",
+        "address": "Ciudad de Guatemala",
+        "phone": 42562365,
+        "nit": "5283282-3"
+    }
+
+]

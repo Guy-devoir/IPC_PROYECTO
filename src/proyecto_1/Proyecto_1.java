@@ -17,7 +17,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 
 /**
  * @author Luciano Xiquín
@@ -25,7 +27,7 @@ import java.util.Scanner;
  * @author Brayan Mica
  **/
 public class Proyecto_1 {
-    static ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
+    
     static ArrayList<Product> productos = new ArrayList<Product>();
     static ArrayList<Client> clientes = new ArrayList<Client>();
     static ArrayList<Factura> facturas = new ArrayList<Factura>();
@@ -35,23 +37,16 @@ public class Proyecto_1 {
     public static int contador = 0;
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
-        set_config();
-        System.out.println("============================");
-        try {
-            password();
-        } catch (Exception e) {
-            System.out.println("Usuario no valido");
-        }
+        Login login = new Login();
+        login.getClass();      
     }
 
     private static void set_config() throws IOException, ClassNotFoundException {
         Gson gson = new Gson();
         String json = "";
         try {
-            //Ruta de acceso de archivo config para luciano comentar la de abjo para poder usar
-            BufferedReader buffer = new BufferedReader(new FileReader("config.json"));
-            //Ruta de acceso de archivo connfig para brayan
-            //BufferedReader buffer = new BufferedReader(new FileReader("C:\\Users\\Messi\\Desktop\\yo\\Proyecto ipc\\Fase 1\\IPC_PROYECTO\\json_files\\config.json"));
+            
+            BufferedReader buffer = new BufferedReader(new FileReader("config.json"));            
             String linea;
             while ((linea = buffer.readLine()) != null) {
                 json += linea;
@@ -65,42 +60,18 @@ public class Proyecto_1 {
         System.out.println("Archivos a leer: " + config.getLoad());
 
         if (config.getLoad().equals("json")) {
-            leer_usuarios();
+            
             leer_productos();
             leer_clientes();
             leer_facturas();
         }
         if (config.getLoad().equals("bin")) {
-            usuarios = (ArrayList<Usuario>) deserialize("users.ipcrm");
+            
             productos = (ArrayList<Product>) deserialize("products.ipcrm");
             clientes = (ArrayList<Client>) deserialize("clients.ipcrm");
             facturas = (ArrayList<Factura>) deserialize("invoices.ipcrm");
         }
 
-    }
-
-    private static void leer_usuarios() throws IOException {
-        Usuario[] aux;
-        Gson gson = new Gson();
-        String json = "";
-        try {
-            //Ruta de acceso de archivo user.json para brayan
-            BufferedReader buffer = new BufferedReader(new FileReader("users.json"));
-            String linea;
-            while ((linea = buffer.readLine()) != null) {
-                json += linea;
-            }
-            buffer.close();
-        } catch (FileNotFoundException e) {
-
-        }
-        //System.out.println(json);
-
-        aux = gson.fromJson(json, Usuario[].class);
-
-        //System.out.println(aux[0].getUsername()+aux[0].getPassword());
-        usuarios.addAll(Arrays.asList(aux));
-        //System.out.println(usuarios.get(0));
     }
 
     private static void leer_productos() throws IOException {
@@ -123,6 +94,9 @@ public class Proyecto_1 {
 
         //System.out.println(aux[0].getUsername()+aux[0].getPassword());
         productos.addAll(Arrays.asList(aux));
+        Set<Product> set = new HashSet<>(productos);
+        productos.clear();
+        productos.addAll(set);
         //System.out.println(usuarios.get(0));
     }
 
@@ -143,6 +117,9 @@ public class Proyecto_1 {
         aux = gson.fromJson(json, Client[].class);
 
         clientes.addAll(Arrays.asList(aux));
+        Set<Client> set = new HashSet<>(clientes);
+        clientes.clear();
+        clientes.addAll(set);
     }
 
     private static void leer_facturas() throws IOException {
@@ -162,6 +139,9 @@ public class Proyecto_1 {
         aux = gson.fromJson(json, Factura[].class);
 
         facturas.addAll(Arrays.asList(aux));
+        Set<Factura> set = new HashSet<>(facturas);
+        facturas.clear();
+        facturas.addAll(set);
     }
 
     private static void password() throws IOException {
@@ -181,15 +161,7 @@ public class Proyecto_1 {
 
         //Procedimiento para verificar que la contraseña si la contraseña es la misma probarlo en consola
         //Se utilizo procedimiento de recursividad para cada vuleta hasta ser la correcta
-        for (int i = 0; i < usuarios.size(); i++) {
-            if (user.equals(usuarios.get(i).getUsername()) && pass.equals(usuarios.get(i).getPassword())) {
-                usuarioactual = user;
-                Listaacciones.add( " "+dtf.format(LocalDateTime.now())+"  "+usuarioactual+": Inicio de sesión exitoso");
-                Menu();
-                break;
-            }
-
-        }
+       
         System.out.println("El usuario o la contraseña estan mal escritos");
         System.out.println("Porfavor vulve a ingresarlos \n");
         //Agregando usuarios fallidos al logacciones
@@ -197,7 +169,7 @@ public class Proyecto_1 {
         password();
 
     }
-
+/*
     private static void Menu() throws IOException {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         Scanner sc = new Scanner(System.in);
@@ -432,7 +404,7 @@ public class Proyecto_1 {
         
      
     }
-    
+    */
     private static void logacciones() throws IOException{
                 FileWriter file = new FileWriter("log.log");
                 for (int a=0; a < Listaacciones.size();a++){
@@ -465,7 +437,7 @@ public class Proyecto_1 {
         }
         return null;
     }
-
+/*
     private static void print_object(int cutre) {
         if(cutre == 1){
             for (int i = 0; i < usuarios.size(); i++) {
@@ -485,7 +457,7 @@ public class Proyecto_1 {
         }
         }
     }
-    
+    */
     public static void writeOnFile(String pathname, String content, boolean append) {
         File file;
         FileWriter fw = null;

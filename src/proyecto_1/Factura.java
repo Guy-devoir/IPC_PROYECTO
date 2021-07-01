@@ -28,10 +28,11 @@ public class Factura implements Serializable {
     public Factura() {
     }
 
-    public Factura(int id, int client, String date) {
+    public Factura(int id, int client, String date, ArrayList<Product> products) {
         this.id = id;
         this.client = client;
         this.date = date;
+        this.products = products;
     }
 
     @Override

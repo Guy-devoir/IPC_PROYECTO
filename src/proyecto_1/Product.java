@@ -8,20 +8,20 @@ public class Product implements Serializable {
     private int id;
     private String name;
     private String description;
-    private int cost;
+    private double cost;
     private int price;
     private ArrayList<Ingredient> ingredientes = new ArrayList<Ingredient>();
 
     public Product() {
     }
 
-    public Product(int id, String name, String description, int cost, int price) {
+    public Product(int id, String name, String description, double cost, int price, ArrayList<Ingredient> ingredientes) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.cost = cost;
         this.price = price;
-
+        this.ingredientes = ingredientes;
     }
 
     public int getId() {
@@ -36,7 +36,7 @@ public class Product implements Serializable {
         return description;
     }
 
-    public int getCost() {
+    public double getCost() {
         return cost;
     }
 
@@ -57,7 +57,7 @@ public class Product implements Serializable {
         this.description = description;
     }
 
-    public void setCost(int cost) {
+    public void setCost(double cost) {
         this.cost = cost;
     }
 
