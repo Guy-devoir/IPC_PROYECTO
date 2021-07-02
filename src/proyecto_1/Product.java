@@ -9,13 +9,13 @@ public class Product implements Serializable {
     private String name;
     private String description;
     private double cost;
-    private int price;
+    private double price;
     private ArrayList<Ingredient> ingredientes = new ArrayList<Ingredient>();
 
     public Product() {
     }
 
-    public Product(int id, String name, String description, double cost, int price, ArrayList<Ingredient> ingredientes) {
+    public Product(int id, String name, String description, double cost, double price, ArrayList<Ingredient> ingredientes) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -40,7 +40,7 @@ public class Product implements Serializable {
         return cost;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
@@ -61,12 +61,16 @@ public class Product implements Serializable {
         this.cost = cost;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
     public ArrayList<Ingredient> getIngredientes() {
         return ingredientes;
+    }
+
+    public void setIngredientes(ArrayList<Ingredient> ingredientes) {
+     this.ingredientes = ingredientes;
     }
 
     @Override

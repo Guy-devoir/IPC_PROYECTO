@@ -15,11 +15,12 @@ import java.util.logging.Logger;
 import javax.swing.*;
 import static proyecto_1.Proyecto_1.Listaacciones;
 
-public class CFrame extends JFrame{
-private Config config = new Config();
-JPanel panel_1 = new JPanel();
-JPanel panel_2 = new JPanel();
-private String usuarioactual;
+public class CFrame extends JFrame {
+    //Solo se importa la ListadeAcciones desde el Main
+    private Config config = new Config();
+    JPanel panel_1 = new JPanel();
+    JPanel panel_2 = new JPanel();
+    private String usuarioactual;
 
     public CFrame(Config config, String usuarioactual) throws HeadlessException {
         //Este constructor no construye ni carga ninguno de los paneles simplemente se encarga de lo básico
@@ -64,7 +65,7 @@ private String usuarioactual;
                 config.setPhone(n);
                 /*
                 *El botón save serializa directamente e instancia un nuevo 'Dashboard'              
-                */
+                 */
                 Gson gson = new Gson();
                 String jsonConfig = gson.toJson(config);
                 writeOnFile("config.json", jsonConfig, false);
@@ -73,7 +74,7 @@ private String usuarioactual;
                     Dashboard newMenu = new Dashboard(usuarioactual);
                     newMenu.setVisible(true);
                     //Los logs como se puede ver serán agregados de la misma manera en la cual se hacian en el programa de consola
-                    Listaacciones.add( " "+dtf.format(LocalDateTime.now())+"  "+usuarioactual+": Actualizo la información del restaurante.");                                       
+                    Listaacciones.add(" " + dtf.format(LocalDateTime.now()) + "  " + usuarioactual + ": Actualizó la información del restaurante");
                 } catch (IOException ex) {
                     Logger.getLogger(CFrame.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (ClassNotFoundException ex) {
@@ -105,7 +106,6 @@ private String usuarioactual;
         this.add(panel_1);
         this.add(panel_2);
         this.setVisible(true);
-        
 
     }
 

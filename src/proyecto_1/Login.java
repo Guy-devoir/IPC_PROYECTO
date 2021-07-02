@@ -106,7 +106,11 @@ public class Login implements ActionListener{
             //Agregando usuarios fallidos al logacciones
             Listaacciones.add(" " + dtf.format(LocalDateTime.now()) + "  " + userText + ": Inicio de sesión fallido");
         }        
-        
+        try {
+            logacciones();
+        } catch (IOException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private void leer_usuarios() throws IOException {
@@ -139,5 +143,13 @@ public class Login implements ActionListener{
             }
         }
         return aux;
+    }
+    
+    private static void logacciones() throws IOException{
+                FileWriter file = new FileWriter("log.log");
+                for (int a=0; a < Listaacciones.size();a++){
+                    file.write(""+ Listaacciones.get(a) +"\n");
+                }
+                file.close();
     }
 }

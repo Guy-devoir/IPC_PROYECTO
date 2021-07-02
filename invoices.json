@@ -1,13 +1,1 @@
-[
-    {
-        "id": 1, 
-        "client": 1,
-        "date": "2020-06-13",
-        "products": [
-            {
-                "name": "Pizza",
-                "price": 50
-            }
-        ]
-    }
-]
+[{"id":1,"client":1,"date":"2020-06-13","products":[{"id":0,"name":"Pizza","cost":0.0,"price":50.0,"ingredientes":[]}]},{"id":2,"client":1,"date":"2021/07/02 09:20:49","products":[]}]

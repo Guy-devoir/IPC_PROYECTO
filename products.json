@@ -1,16 +1,1 @@
-[
-    {
-        "id": 1,
-        "name": "Pizza",
-        "description": "Pizza Hawaiana con queso",
-        "cost": 40,
-        "price": 50,
-        "ingredients": [
-            {
-                "name": "Piña",
-                "quantity": 1,
-                "units": "Unidades"
-            }
-        ]
-    }
-]
+[{"id":2,"name":"Cocacola","description":"Gaseosa","cost":4.0,"price":5.0,"ingredientes":[{"name":"Gas","quantity":30,"units":"3"},{"name":"Gas","quantity":30,"units":"3"},{"name":"Gas","quantity":30,"units":"3"},{"name":"Gas","quantity":30,"units":"3"}]},{"id":1,"name":"Pizza","description":"Pizza Hawaiana con queso","cost":40.0,"price":50.0,"ingredientes":[]}]

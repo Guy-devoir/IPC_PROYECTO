@@ -57,19 +57,61 @@ public class Dashboard extends JFrame implements ActionListener {
                 CFrame frameInfo = new CFrame(config, usuarioactual);
                 frameInfo.showInfo();
                 setVisible(false);
-                
+
             }
         });
         usuarios = new JButton(new AbstractAction("Usuarios") {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                Tablas tbUs = new Tablas(usuarioactual);
+                try {
+                    tbUs.usuarios();
+                } catch (IOException ex) {
+                    Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                setVisible(false);
+                
             }
         });
-        clientes = new JButton("Clientes");
-        productos = new JButton("Productos");
-        facturas = new JButton("Facturas");
-        log = new JButton(new AbstractAction("Logacciones"){
+        clientes = new JButton(new AbstractAction("Clientes") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Tablas tbUs = new Tablas(usuarioactual);
+                try {
+                    tbUs.clientes();
+                } catch (IOException ex) {
+                    Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                setVisible(false);
+                
+            }
+        });
+        productos = new JButton(new AbstractAction("Productos") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Tablas tbUs = new Tablas(usuarioactual);
+                try {
+                    tbUs.productos();
+                } catch (IOException ex) {
+                    Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                setVisible(false);
+                
+            }
+        });
+        facturas = new JButton(new AbstractAction("Facturas"){
+        @Override
+            public void actionPerformed(ActionEvent e) {
+            Tablas tbUs = new Tablas(usuarioactual);
+                try {
+                    tbUs.facturas();
+                } catch (IOException ex) {
+                    Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                setVisible(false);
+            }
+        });
+        log = new JButton(new AbstractAction("Logs"){
         @Override
             public void actionPerformed(ActionEvent e) {
             try {

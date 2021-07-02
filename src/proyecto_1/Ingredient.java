@@ -21,6 +21,31 @@ public class Ingredient implements Serializable {
         this.units = units;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public String getUnits() {
+        return units;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public void setUnits(String units) {
+        this.units = units;
+    }
+
+    
     @Override
     public String toString() {
         return "Ingredient{" + "name=" + name + ", quantity=" + quantity + ", units=" + units + '}';
