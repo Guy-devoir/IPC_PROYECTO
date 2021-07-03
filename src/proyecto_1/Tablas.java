@@ -71,8 +71,7 @@ public class Tablas extends JFrame {
     public Tablas(String usuarioactual) {
         this.usuarioactual = usuarioactual;
         this.setSize(375, 345);
-        this.setResizable(false);
-        
+        this.setResizable(false);        
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new GridLayout(2, 1, 10, 10));
         this.add(panel_1);
@@ -105,6 +104,7 @@ public class Tablas extends JFrame {
                 boolean varU = validación(n);
                 if (varU != true) {
                     usuarios.add(n);
+                    opciones.addItem(n.getUsername());
                     Listaacciones.add(" " + dtf.format(LocalDateTime.now()) + "  " + usuarioactual + ": Agregó un nuevo usuario");
                 } else {
                     Listaacciones.add(" " + dtf.format(LocalDateTime.now()) + "  " + usuarioactual + ": Intentó agregar un usuario duplicado");
@@ -168,7 +168,7 @@ public class Tablas extends JFrame {
                 writeOnFile("users.json", json, false);
             }
         });
-        JButton get = new JButton(new AbstractAction("Datos") {
+        JButton get = new JButton(new AbstractAction("Editar") {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String selectedUser = (String) opciones.getSelectedItem();
@@ -246,7 +246,8 @@ public class Tablas extends JFrame {
     private void allUsers() throws IOException {
         JFrame newFrame = new JFrame("Todos los usuarios");
         JPanel panel = new JPanel();
-
+        newFrame.setSize(600, 400);
+        newFrame.setResizable(true);
         leer_usuarios();
         String[] col = {"Usuario", "Contraseña"};
         //Tabla y su modelo
@@ -304,6 +305,8 @@ public class Tablas extends JFrame {
                 boolean varU = validación(n);
                 if (varU != true) {
                     clientes.add(n);
+                    String idCombo = String.valueOf(n.getId());
+                    opciones.addItem(idCombo);
                     Listaacciones.add(" " + dtf.format(LocalDateTime.now()) + "  " + usuarioactual + ": Agregó un nuevo cliente");
                     d++;
                 } else {
@@ -377,7 +380,7 @@ public class Tablas extends JFrame {
                 writeOnFile("clients.json", json, false);
             }
         });
-        JButton get = new JButton(new AbstractAction("Datos") {
+        JButton get = new JButton(new AbstractAction("Editar") {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String selectedUser = (String) opciones.getSelectedItem();
@@ -436,7 +439,7 @@ public class Tablas extends JFrame {
         this.setVisible(true);
 
     }
-
+    
     private void leer_clientes() throws IOException {
         clientes.clear();
         Client[] aux;
@@ -449,9 +452,9 @@ public class Tablas extends JFrame {
                 json += linea;
             }
         } catch (FileNotFoundException e) {
-
+            
         }
-
+        
         aux = gson.fromJson(json, Client[].class);
         arregloClientes = aux;
         clientes.addAll(Arrays.asList(aux));
@@ -459,11 +462,12 @@ public class Tablas extends JFrame {
         clientes.clear();
         clientes.addAll(set);
     }
-
+    
     private void allClients() throws IOException {
         JFrame newFrame = new JFrame("Todos los Clientes");
         JPanel panel = new JPanel();
-
+        newFrame.setSize(600, 400);
+        newFrame.setResizable(true);
         leer_clientes();
         String[] col = {"id", "Nombre", "Dirección", "Telefono", "NIT"};
         //Tabla y su modelo
@@ -526,6 +530,8 @@ public class Tablas extends JFrame {
                 boolean varU = validación(n);
                 if (varU != true) {
                     productos.add(n);
+                    String idCombo = String.valueOf(n.getId());
+                    opciones.addItem(idCombo);
                     Listaacciones.add(" " + dtf.format(LocalDateTime.now()) + "  " + usuarioactual + ": Agregó un nuevo producto");
                     d2++;
                 } else {
@@ -597,7 +603,7 @@ public class Tablas extends JFrame {
                 writeOnFile("products.json", json, false);;
             }
         });
-        JButton get = new JButton(new AbstractAction("Datos") {
+        JButton get = new JButton(new AbstractAction("Editar") {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String selectedUser = (String) opciones.getSelectedItem();
@@ -701,8 +707,10 @@ public class Tablas extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 int c = Integer.valueOf(quantityInField.getText());
                 Ingredient n = new Ingredient(nombreInField.getText(), c, unitsInField.getText());
-                ingredientes.add(n);               
-                product.getIngredientes().add(n);                
+                ingredientes.add(n);
+                String idCombo = String.valueOf(n.getName());
+                opciones.addItem(idCombo);
+                product.getIngredientes().add(n);
                 Listaacciones.add(" " + dtf.format(LocalDateTime.now()) + "  " + usuarioactual + ": Agrego un ingrediente a un producto");
 
             }
@@ -747,7 +755,7 @@ public class Tablas extends JFrame {
                 }
             }
         });
-        JButton get = new JButton(new AbstractAction("Datos") {
+        JButton get = new JButton(new AbstractAction("Editar") {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String selectedUser = (String) opciones.getSelectedItem();
@@ -824,7 +832,8 @@ public class Tablas extends JFrame {
     private void allProducts() throws IOException {
         JFrame newFrame = new JFrame("Todos los Productos");
         JPanel panel = new JPanel();
-
+        newFrame.setSize(600, 400);
+        newFrame.setResizable(true);
         leer_productos();
         String[] col = {"id", "Nombre", "Descripción", "Costo", "Precio"};
         //Tabla y su modelo
@@ -851,11 +860,12 @@ public class Tablas extends JFrame {
         newFrame.setVisible(true);
         
     }
-    
+
     private void verIngredientes(Product product) throws IOException {
         JFrame newFrame = new JFrame("Ingredientes");
         JPanel panel = new JPanel();
-
+        newFrame.setSize(600, 400);
+        newFrame.setResizable(true);
         leer_productos();
         String[] col = {"Nombre", "Cantidad", "Unidades"};
         //Tabla y su modelo
@@ -924,7 +934,7 @@ public class Tablas extends JFrame {
                 writeOnFile("invoices.json", json, false);
             }
         });
-        JButton productButton = new JButton(new AbstractAction("Agregrar P") {
+        JButton productButton = new JButton(new AbstractAction("Add Product") {
             @Override
             public void actionPerformed(ActionEvent e) {
                 for (int i = 0; i < productos.size(); i++) {
@@ -1010,9 +1020,10 @@ public class Tablas extends JFrame {
     }
 
     private void allInvoices() throws IOException {
-    JFrame newFrame = new JFrame("Todos las facturas");
+        JFrame newFrame = new JFrame("Todos las facturas");
         JPanel panel = new JPanel();
-
+        newFrame.setSize(600, 400);
+        newFrame.setResizable(true);
         leer_facturas();
         String[] col = {"No de Factura", "id Cliente", "Fecha"};
         //Tabla y su modelo
