@@ -37,6 +37,7 @@ public class Tablas extends JFrame {
     private ArrayList<Factura> facturas = new ArrayList<Factura>();
     private Factura[] arregloFacturas;
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+    DateTimeFormatter jdtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
     int d;
     int d2;
     int d3;
@@ -117,7 +118,9 @@ public class Tablas extends JFrame {
             boolean validación(Usuario n) {
                 boolean aux = false;
                 for (int i = 0; i <= usuarios.size() - 1; i++) {
-                    if (n.equals(usuarios.get(i).getUsername()) || n.equals(usuarios.get(i).getPassword())) {
+                    if (n.equals(usuarios.get(i).getUsername())) {
+                        aux = true;
+                    }if (n.equals(usuarios.get(i).getPassword())) {
                         aux = true;
                     }
                 }
@@ -269,7 +272,7 @@ public class Tablas extends JFrame {
     }
 
     public void clientes() throws IOException {
-        this.setSize(375, 450);
+        this.setSize(375, 500);
         leer_clientes();
         this.setTitle("CRUD Clientes");
         JComboBox<String> opciones;
@@ -315,7 +318,11 @@ public class Tablas extends JFrame {
             boolean validación(Client n) {
                 boolean aux = false;
                 for (int i = 0; i <= clientes.size() - 1; i++) {
-                    if (n.equals(clientes.get(i).getName()) || n.equals(clientes.get(i).getNit())) {
+                    if (n.equals(clientes.get(i).getName())) {
+                        aux = true;
+                    }if (n.equals(clientes.get(i).getAddress())) {
+                        aux = true;
+                    }if (n.equals(clientes.get(i).getNit())) {
                         aux = true;
                     }
                 }
@@ -362,7 +369,7 @@ public class Tablas extends JFrame {
                         int aux = Integer.valueOf(phoneField.getText());
                         clientes.get(i).setPhone(aux);
                         clientes.get(i).setNit(nitField.getText());
-                        Listaacciones.add(" " + dtf.format(LocalDateTime.now()) + "  " + usuarioactual + ": actualizo al cliente con id '" + selectedUser + "'");
+                        Listaacciones.add(" " + dtf.format(LocalDateTime.now()) + "  " + usuarioactual + ": Actualizo al cliente con id '" + selectedUser + "'");
                     }
                 }
                 Gson gson = new Gson();
@@ -413,7 +420,7 @@ public class Tablas extends JFrame {
         panel_1.add(nitLabel);
         panel_1.add(nitField);
         panel_1.setLayout(new GridLayout(9, 1, 3, 3));
-        panel_1.setBorder(BorderFactory.createEmptyBorder(15, 30, 0, 30));
+        panel_1.setBorder(BorderFactory.createEmptyBorder(10, 30, 0, 30));
 
         panel_2.add(agregar);
         panel_2.add(eliminar);
@@ -421,8 +428,8 @@ public class Tablas extends JFrame {
         panel_2.add(update);
         panel_2.add(get);
         panel_2.add(volver);
-        panel_2.setLayout(new GridLayout(2, 3, 10, 10));
-        panel_2.setBorder(BorderFactory.createEmptyBorder(10, 30, 20, 30));
+        panel_2.setLayout(new GridLayout(2, 3, 15, 15));
+        panel_2.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
 
         this.add(panel_1);
         this.add(panel_2);
@@ -485,7 +492,7 @@ public class Tablas extends JFrame {
     }
 
     public void productos() throws IOException {
-        this.setSize(450, 600);
+        this.setSize(400, 575);
         leer_productos();
         this.setTitle("CRUD Productos");
         JComboBox<String> opciones;
@@ -535,6 +542,8 @@ public class Tablas extends JFrame {
                 for (int i = 0; i <= productos.size() - 1; i++) {
                     if (n.getName().equals(productos.get(i).getName())) {
                         aux = true;
+                    }if (n.getName().equals(productos.get(i).getDescription())) {
+                        aux = true;
                     }
                 }
                 return aux;
@@ -580,7 +589,7 @@ public class Tablas extends JFrame {
                         productos.get(i).setCost(aux1);
                         double aux2 = Double.valueOf(priceField.getText());
                         productos.get(i).setPrice(aux2);
-                        Listaacciones.add(" " + dtf.format(LocalDateTime.now()) + "  " + usuarioactual + ": actualizo el producto con id '" + selectedUser + "'");
+                        Listaacciones.add(" " + dtf.format(LocalDateTime.now()) + "  " + usuarioactual + ": Actualizó el producto con id '" + selectedUser + "'");
                     }
                 }
                 Gson gson = new Gson();
@@ -668,8 +677,9 @@ public class Tablas extends JFrame {
     }
     
     private void ingredientes(Product product) throws IOException {
+        ingredientes.clear();
         JFrame newFrame = new JFrame("Ingredientes de " + product.getName());
-        newFrame.setSize(400, 450);
+        newFrame.setSize(375, 420);
         newFrame.setLayout(new GridLayout(2, 1, 10, 10));
         JComboBox<String> opciones;
         opciones = new JComboBox<String>();
@@ -679,7 +689,7 @@ public class Tablas extends JFrame {
             opciones.addItem(idCombo);
         }
         //Componentes para el array de ingredientes
-        JLabel nombreIn = new JLabel("Nombre del Producto");
+        JLabel nombreIn = new JLabel("Ingrediente");
         JTextField nombreInField = new JTextField();
         JLabel quantityIn = new JLabel("Cantidad");
         JTextField quantityInField = new JTextField();
@@ -692,9 +702,8 @@ public class Tablas extends JFrame {
                 int c = Integer.valueOf(quantityInField.getText());
                 Ingredient n = new Ingredient(nombreInField.getText(), c, unitsInField.getText());
                 ingredientes.add(n);               
-                product.getIngredientes().add(n);
-                
-                Listaacciones.add(" " + dtf.format(LocalDateTime.now()) + "  " + usuarioactual + ": modificó un producto");
+                product.getIngredientes().add(n);                
+                Listaacciones.add(" " + dtf.format(LocalDateTime.now()) + "  " + usuarioactual + ": Agrego un ingrediente a un producto");
 
             }
 
@@ -873,7 +882,7 @@ public class Tablas extends JFrame {
     }
   
     public void facturas() throws IOException {
-        this.setSize(450, 600);
+        this.setSize(320, 350);
         leer_productos();
         leer_clientes();
         leer_facturas();
@@ -908,7 +917,7 @@ public class Tablas extends JFrame {
 
                 Factura n = new Factura(d3, idCliente, dtf.format(LocalDateTime.now()),auxProducts);
                 facturas.add(n);
-                Listaacciones.add(" " + dtf.format(LocalDateTime.now()) + "  " + usuarioactual + ": Creo una factura");
+                Listaacciones.add(" " + jdtf.format(LocalDateTime.now()) + "  " + usuarioactual + ": Creó una factura");
 
                 Gson gson = new Gson();
                 String json = gson.toJson(facturas);
@@ -969,7 +978,7 @@ public class Tablas extends JFrame {
         panel_2.add(table);
         panel_2.add(volver);
         panel_2.setLayout(new GridLayout(2, 2, 10, 10));
-        panel_2.setBorder(BorderFactory.createEmptyBorder(10, 30, 20, 30));
+        panel_2.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
 
         this.add(panel_1);
         this.add(panel_2);
@@ -1005,7 +1014,7 @@ public class Tablas extends JFrame {
         JPanel panel = new JPanel();
 
         leer_facturas();
-        String[] col = {"id", "id Cliente", "Fecha", "Producto", "Precio"};
+        String[] col = {"No de Factura", "id Cliente", "Fecha"};
         //Tabla y su modelo
         DefaultTableModel tableModel = new DefaultTableModel(col, 0) {
 
@@ -1019,9 +1028,7 @@ public class Tablas extends JFrame {
             int id = arregloFacturas[i].getId();
             int idClient = arregloFacturas[i].getClient();
             String date = arregloFacturas[i].getDate();
-            String nameProduct = arregloFacturas[i].getProducts().get(0).getName();
-            double price = arregloFacturas[i].getProducts().get(0).getPrice();
-            Object[] data = {id, idClient, date, nameProduct, price};
+            Object[] data = {id, idClient, date};
             tableModel.addRow(data);
         }
         JTable tabla = new JTable(tableModel);
